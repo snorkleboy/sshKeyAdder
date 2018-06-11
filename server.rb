@@ -21,21 +21,29 @@ class Server
     def start
         while (@incorrectAttempts < 3)
             client = @server.accept
-            if (passwordChallenge(client))
-                if (textChallenge(client))
-                    getSaveKey(client)
-                    client.puts "SUCCESS"
-                    client.close
-                else
-                    client.puts "wrong code"
-                    @incorrectAttempts = @incorrectAttempts+1
-                end  
-            else
-                puts "wrong password"
-                @incorrectAttempts = @incorrectAttempts + 1
+            begin
+                shakeAndBake(client)
+            rescue => exception
+                puts exception
             end
+            
         end
         @server.close
+    end
+    def shakeAndBake(client)
+        if (passwordChallenge(client))
+            if (textChallenge(client))
+                getSaveKey(client)
+                client.puts "SUCCESS"
+                client.close
+            else
+                client.puts "wrong code"
+                @incorrectAttempts = @incorrectAttempts+1
+            end  
+        else
+            puts "wrong password"
+            @incorrectAttempts = @incorrectAttempts + 1
+        end
     end
     def passwordChallenge(client)
         passwrd = getPassword(client)
