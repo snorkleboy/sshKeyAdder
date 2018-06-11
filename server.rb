@@ -34,7 +34,7 @@ class Server
                 client.close
             else
                 client.puts "wrong code"
-                @incorrectAttempts = @incorrectAttempts+1
+                @incorrectAttempts = @incorrectAttempts + 1
             end  
         else
             puts "wrong password"
